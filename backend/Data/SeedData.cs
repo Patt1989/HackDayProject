@@ -9,6 +9,7 @@ public static class SeedData
                    serviceProvider.GetRequiredService<DbContextOptions<RestaurantContext>>()))
         {
             _context.Database.EnsureDeleted(); // Clear the database
+            _context.Database.Migrate();
             _context.Database.EnsureCreated(); // Create the database if not exists
 
             string[] resto_names = { "Mahalo", "Konditori Lyran", "Kafe Plattan", "Greasy Spoon", "Morfar Ginko", "Falloumi" };
