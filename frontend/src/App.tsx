@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar"
 import SearchArea from "./components/SearchArea";
 import './Styles.css'
 
+
 export type Restaurant = {
   id: number;
   name: string;

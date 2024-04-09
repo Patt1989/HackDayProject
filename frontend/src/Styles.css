@@ -1,7 +1,65 @@
 /* App */
+body {
+    background-color: rgb(238,238,238);
+    background-size: cover;
+    background-position: center top; 
+}
+
+/* Navbar */
+.navbar-container {
+    border-bottom: 2px solid rgb(107,36,12);
+    padding: 10px 0px 10px 0px;
+    /* background-color: rgb(255,228,201); */
+}
+
+.navbar_header {
+    font-size: xx-large;
+    color: rgb(107,36,12);
+}
+
+.navbar_link {
+    text-decoration: none !important;
+    font-size: large;
+    color: rgb(107,36,12);
+}
+
+.navbar_link:hover {
+    font-weight: bold;
+}
+
+/* SearchArea */
+.search-area {
+    padding-top: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgb(107,36,12);
+}
+
+.input-field {
+    background-color: white;
+}
+
+.input-field:focus {
+    outline: none !important;
+    border:2px solid rgb(41,75,40);
+    box-shadow: 0 0 0 0;
+}
+
+input[type=submit] {
+    background-color: rgb(41,75,40);
+    border: 2px solid rgb(41,75,40);
+    color: white
+}
+
+input[type=submit]:focus {
+    background-color: rgb(41,75,40);
+    border: 2px solid rgb(41,75,40);
+    color: white;
+    box-shadow: 0 0 0 0;
+}
 
 /* Gallery */
 .resto-gallery {
+    padding-top: 30px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 10px;
@@ -9,11 +67,13 @@
 
 /* RestaurantComponent */
 .resto-element {
+    padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: rgb(179, 185, 197);
+    background-color: rgb(238,238,238);
+    border: 1px solid rgb(107,36,12);
 }
 
 .resto-element_image {
@@ -23,22 +83,34 @@
 }
 
 .resto-element_name {
-    color: black;
+    color: rgb(107,36,12);
 }
 
 .resto-element_foodType {
-    color: black;
+    margin-top: 5px;
+    color: rgb(107,36,12);
 }
 
 .resto-element button {
     visibility: hidden;
+    background-color: rgb(238,238,238);
+    border: 2px solid rgb(107,36,12);
+    color: rgb(107,36,12)
 }
 
 .resto-element:hover button {
     visibility: visible;
+    background-color: rgb(238,238,238);
+    border: 2px solid rgb(107,36,12);
+    color: rgb(107,36,12)
 }
 
-
+.resto-element_buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+}
 
 
 

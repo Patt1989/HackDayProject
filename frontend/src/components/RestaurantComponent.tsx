@@ -15,10 +15,13 @@ function RestaurantComponent({ restaurant, func }: Props) {
   return (
     <>
       <div className='resto-element'>
-        <h1 className='resto-element_name'>{restaurant.name}</h1>
+        <h3 className='resto-element_name'>{restaurant.name}</h3>
         <img className="resto-element_image" src={url} />
         <h5 className='resto-element_foodType'>Type of food: {restaurant.foodType}</h5>
-        <button className={"resto-element_delete-button"} onClick={() => func(stringId)}>Delete</button>
+        <div className='resto-element_buttons'>
+          <button onClick={() => func(stringId)}>Delete</button>
+          <button>Favorite</button>
+        </div>
       </div>
     </>
   )
