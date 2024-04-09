@@ -12,7 +12,7 @@ public static class SeedData
             _context.Database.EnsureCreated(); // Create the database if not exists
 
             string[] resto_names = { "Mahalo", "Konditori Lyran", "Kafe Plattan", "Greasy Spoon", "Morfar Ginko", "Falloumi" };
-            string[] resto_foodTypes = { "Breakfast", "Fika", "Fika", "Breakfast", "Pizza", "Falafel" };
+            string[] resto_foodTypes = { "Breakfast", "Bakery", "Bakery", "Breakfast", "Pizza", "Falafel" };
 
             for (var i = 0; i < resto_names.Length; i++)
             {

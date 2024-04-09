@@ -4,7 +4,7 @@ import Navbar from "./components/Navbar"
 import SearchArea from "./components/SearchArea";
 import './Styles.css'
 
-export type Restaurant= {
+export type Restaurant = {
   name: string;
   foodType: string;
 }
@@ -26,16 +26,23 @@ function App() {
     const inputName = formData.get('restaurantname_input') as string
     const inputFoodtype = formData.get('foodtype_input') as string
 
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: inputName, foodType: inputFoodtype })
-    };
-    await fetch('https://localhost:7175/api/Restaurants', requestOptions)
-      .then(response => response.json())
-      .then(data => {
-        setRestaurants([...restaurants!, data])
-      }); 
+    if (inputName && inputFoodtype) {
+      document.getElementsByClassName("error-message")[0].innerHTML = ""
+
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: inputName, foodType: inputFoodtype })
+      };
+      await fetch('https://localhost:7175/api/Restaurants', requestOptions)
+        .then(response => response.json())
+        .then(data => {
+          setRestaurants([...restaurants!, data])
+        });
+    }
+    else {
+      document.getElementsByClassName("error-message")[0].innerHTML = "Please provide valid input"
+    }
   }
 
   // create a delete request (button appears upon hover)
@@ -44,8 +51,8 @@ function App() {
     return (
       <>
         <Navbar />
-        <SearchArea func={addRestaurant}/>
-        <Gallery restaurants={restaurants}/>
+        <SearchArea func={addRestaurant} />
+        <Gallery restaurants={restaurants} />
 
       </>
     )
@@ -54,14 +61,14 @@ function App() {
 
 export default App
 
-  // useEffect(() => {
-  //   fetch('https://www.googleapis.com/maps/customsearch/v1?key=AIzaSyAzgiwGOf80Q9OEpKb4OdpPKYauGAx1BFs&cx=56d301fd6412745b6&q=mahalo+stockholm')
-  //     .then(response => response.json())
-  //     .then(data => console.log(data));
-  // }, []);
+// useEffect(() => {
+//   fetch('https://www.googleapis.com/maps/customsearch/v1?key=AIzaSyAzgiwGOf80Q9OEpKb4OdpPKYauGAx1BFs&cx=56d301fd6412745b6&q=mahalo+stockholm')
+//     .then(response => response.json())
+//     .then(data => console.log(data));
+// }, []);
 
-  // useEffect(() => {
-  //   fetch('https://maps.googleapis.com/maps/api/place/textsearch/json?query=mahalo%stockholm&key=AIzaSyAzgiwGOf80Q9OEpKb4OdpPKYauGAx1BFs')
-  //     .then(response => response.json())
-  //     .then(data => console.log(data));
-  // }, []);
+// useEffect(() => {
+//   fetch('https://maps.googleapis.com/maps/api/place/textsearch/json?query=mahalo%stockholm&key=AIzaSyAzgiwGOf80Q9OEpKb4OdpPKYauGAx1BFs')
+//     .then(response => response.json())
+//     .then(data => console.log(data));
+// }, []);

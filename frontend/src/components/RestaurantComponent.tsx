@@ -7,7 +7,7 @@ type Props = {
 
 function RestaurantComponent({ restaurant }: Props) {
 
-  var url: string = "https://source.unsplash.com/random/900x1000/?" + restaurant.foodType;
+  var url: string = "https://source.unsplash.com/300x330/?food%20" + restaurant.foodType;
 
   return (
     <>
