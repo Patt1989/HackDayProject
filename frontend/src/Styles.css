@@ -30,6 +30,20 @@
     color: black;
 }
 
+.resto-element button {
+    visibility: hidden;
+}
+
+.resto-element:hover button {
+    visibility: visible;
+}
+
+
+
+
+
+
+
 .bootcamp-list__person--instructor {
     padding: 10px;
     display: flex;

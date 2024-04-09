@@ -5,6 +5,7 @@ import SearchArea from "./components/SearchArea";
 import './Styles.css'
 
 export type Restaurant = {
+  id: number;
   name: string;
   foodType: string;
 }
@@ -16,7 +17,9 @@ function App() {
   useEffect(() => {
     fetch('https://localhost:7175/api/Restaurants')
       .then(response => response.json())
-      .then(data => setRestaurants(data));
+      .then(data => 
+        setRestaurants(data))
+  ;
   }, []);
 
   async function addRestaurant(event: FormEvent<HTMLFormElement>) {
@@ -37,6 +40,7 @@ function App() {
       await fetch('https://localhost:7175/api/Restaurants', requestOptions)
         .then(response => response.json())
         .then(data => {
+          console.log(data);
           setRestaurants([...restaurants!, data])
         });
     }
@@ -45,15 +49,18 @@ function App() {
     }
   }
 
-  // create a delete request (button appears upon hover)
+  function deleteRestaurant(id: string) {
+    var intId: number = +id;
+    fetch(`https://localhost:7175/api/Restaurants/${id}`, { method: 'DELETE' })
+      .then(() => setRestaurants((oldRestaurants) => oldRestaurants?.filter(resto => resto.id != intId)));
+  }
 
   if (restaurants) {
     return (
       <>
         <Navbar />
         <SearchArea func={addRestaurant} />
-        <Gallery restaurants={restaurants} />
-
+        <Gallery restaurants={restaurants} func={deleteRestaurant} />
       </>
     )
   }

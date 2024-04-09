@@ -34,7 +34,7 @@ public class RestaurantService
         return restaurant;
     }
 
-    public async Task<List<DTORequestRestaurant>> GetRestaurants()
+    public async Task<List<Restaurant>> GetRestaurants()
     {
         if (_context.Restaurants is null)
         {
@@ -42,21 +42,10 @@ public class RestaurantService
         }
 
         var restaurants = await _context.Restaurants.ToListAsync();
-        List<DTORequestRestaurant> dtoRestaurants = [];
-
-        foreach (var resto in restaurants)
-        {
-            var dtoRestaurant = new DTORequestRestaurant
-            {
-                Name = resto.Name,
-                FoodType = resto.FoodType
-            };
-            dtoRestaurants.Add(dtoRestaurant);
-        }
-        return dtoRestaurants;
+        return restaurants;
     }
 
-    public async Task<List<DTORequestRestaurant>> GetRestaurants(string foodType)
+    public async Task<List<Restaurant>> GetRestaurants(string foodType)
     {
         if (_context.Restaurants is null)
         {
@@ -64,21 +53,10 @@ public class RestaurantService
         }
 
         var restaurants = await _context.Restaurants.Where(r => r.FoodType == foodType).ToListAsync();
-        List<DTORequestRestaurant> dtoRestaurants = [];
-
-        foreach (var resto in restaurants)
-        {
-            var dtoRestaurant = new DTORequestRestaurant
-            {
-                Name = resto.Name,
-                FoodType = resto.FoodType
-            };
-            dtoRestaurants.Add(dtoRestaurant);
-        }
-        return dtoRestaurants;
+        return restaurants;
     }
 
-    public async Task<DTORequestRestaurant> GetRestaurantById(int id)
+    public async Task<Restaurant> GetRestaurantById(int id)
     {
         if (_context.Restaurants is null)
         {
@@ -86,20 +64,10 @@ public class RestaurantService
         }
 
         var restaurant = await _context.Restaurants.FirstOrDefaultAsync(r => r.Id == id);
-        if (restaurant is null)
-        {
-            return null;
-        }
-
-        var dtoRestaurant = new DTORequestRestaurant
-        {
-            Name = restaurant.Name,
-            FoodType = restaurant.FoodType
-        };
-        return dtoRestaurant;
+        return restaurant;
     }
 
-    public async Task<DTORequestRestaurant> DeleteRestaurantById(int id)
+    public async Task<Restaurant> DeleteRestaurantById(int id)
     {
         if (_context.Restaurants is null)
         {
@@ -114,13 +82,7 @@ public class RestaurantService
 
         _context.Restaurants.Remove(restaurant);
         await _context.SaveChangesAsync();
-
-        var dtoRestaurant = new DTORequestRestaurant
-        {
-            Name = restaurant.Name,
-            FoodType = restaurant.FoodType
-        };
-        return dtoRestaurant;
+        return restaurant;
     }
 
     // // PUT artist of CD

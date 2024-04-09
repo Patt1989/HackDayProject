@@ -3,11 +3,12 @@ import { Restaurant } from "../App"
 import '../Styles.css'
 
 type Props = {
-  restaurants: Restaurant[]
+  restaurants: Restaurant[],
+ func: (id: string) => void
 }
 
 
-function Gallery({ restaurants }: Props) {
+function Gallery({ restaurants, func }: Props) {
 
   return (
     <>
@@ -15,7 +16,7 @@ function Gallery({ restaurants }: Props) {
         {restaurants.map((restaurant) => {
           return (
             <div>
-              <RestaurantComponent restaurant={restaurant} />
+              <RestaurantComponent restaurant={restaurant} func={func} />
             </div>
           )
         })}

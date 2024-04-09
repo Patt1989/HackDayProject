@@ -29,9 +29,9 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<DTORequestRestaurant>>> GetAll(string foodType = null)
+        public async Task<ActionResult<IEnumerable<Restaurant>>> GetAll(string foodType = null)
         {
-            List<DTORequestRestaurant> result;
+            List<Restaurant> result;
             if (foodType is null)
             {
                 result = await _service.GetRestaurants();
@@ -49,7 +49,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<DTORequestRestaurant>> GetRestaurant(int id)
+        public async Task<ActionResult<Restaurant>> GetRestaurant(int id)
         {
             var result = await _service.GetRestaurantById(id);
             if (result is null)
@@ -60,7 +60,7 @@ namespace backend.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<DTORequestRestaurant>> DeleteRestaurant(int id)
+        public async Task<ActionResult<Restaurant>> DeleteRestaurant(int id)
         {
             var result = await _service.DeleteRestaurantById(id);
             if (result is null)
