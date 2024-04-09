@@ -59,6 +59,17 @@ namespace backend.Controllers
             return result;
         }
 
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<DTORequestRestaurant>> DeleteRestaurant(int id)
+        {
+            var result = await _service.DeleteRestaurantById(id);
+            if (result is null)
+            {
+                return NotFound();
+            }
+            return result;
+        }
+
         //     // PUT: api/CDs/{id}/artist
         //     [HttpPut("{id}/artist")]
         //     public async Task<ActionResult<DTORequestCD>> PutCDArtist(int id, string artist)

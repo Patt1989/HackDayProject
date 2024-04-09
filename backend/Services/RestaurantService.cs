@@ -63,7 +63,7 @@ public class RestaurantService
             return null;
         }
 
-        var restaurants = await _context.Restaurants.Where(c => c.FoodType == foodType).ToListAsync();
+        var restaurants = await _context.Restaurants.Where(r => r.FoodType == foodType).ToListAsync();
         List<DTORequestRestaurant> dtoRestaurants = [];
 
         foreach (var resto in restaurants)
@@ -85,11 +85,35 @@ public class RestaurantService
             return null;
         }
 
-        var restaurant = await _context.Restaurants.FirstOrDefaultAsync(c => c.Id == id);
+        var restaurant = await _context.Restaurants.FirstOrDefaultAsync(r => r.Id == id);
         if (restaurant is null)
         {
             return null;
         }
+
+        var dtoRestaurant = new DTORequestRestaurant
+        {
+            Name = restaurant.Name,
+            FoodType = restaurant.FoodType
+        };
+        return dtoRestaurant;
+    }
+
+    public async Task<DTORequestRestaurant> DeleteRestaurantById(int id)
+    {
+        if (_context.Restaurants is null)
+        {
+            return null;
+        }
+
+        var restaurant = await _context.Restaurants.FirstOrDefaultAsync(r => r.Id == id);
+        if (restaurant is null)
+        {
+            return null;
+        }
+
+        _context.Restaurants.Remove(restaurant);
+        await _context.SaveChangesAsync();
 
         var dtoRestaurant = new DTORequestRestaurant
         {
