@@ -1,0 +1,67 @@
+/* App */
+.total-app {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+#form__button-addDev {
+    width: 30%;
+    float: right;
+}
+
+/* Gallery */
+.gallery-header {
+    display: flex;
+    justify-content: center;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+}
+
+/* BootcampCard */
+.gallery__bootcamp-list {
+    visibility: hidden;
+}
+
+.gallery__filter-select-bootcamp {
+    visibility: visible;
+}
+
+.bootcampCard-header {
+    display: flex;
+    justify-content: center;
+}
+
+/* Person */
+.bootcamp-list__person--instructor {
+    padding: 10px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.bootcamp-list__person--developer {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 3px;
+}
+
+.--selected {
+    background-color: rgb(179,185,197);  
+}
+
+.developer-button {
+    visibility: hidden;
+}
+
+.bootcamp-list__person__button-delete {
+    visibility: visible;
+}
+
+.person-name {
+    color: rgb(4,114,173);
+}
