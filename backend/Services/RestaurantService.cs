@@ -26,6 +26,7 @@ public class RestaurantService
         var restaurant = new Restaurant
         {
             Name = dtoRestaurant.Name,
+            FoodType = dtoRestaurant.FoodType
         };
 
         _context.Restaurants.Add(restaurant);
@@ -48,6 +49,7 @@ public class RestaurantService
             var dtoRestaurant = new DTORequestRestaurant
             {
                 Name = resto.Name,
+                FoodType = resto.FoodType
             };
             dtoRestaurants.Add(dtoRestaurant);
         }
@@ -69,6 +71,7 @@ public class RestaurantService
             var dtoRestaurant = new DTORequestRestaurant
             {
                 Name = resto.Name,
+                FoodType = resto.FoodType
             };
             dtoRestaurants.Add(dtoRestaurant);
         }
@@ -91,6 +94,7 @@ public class RestaurantService
         var dtoRestaurant = new DTORequestRestaurant
         {
             Name = restaurant.Name,
+            FoodType = restaurant.FoodType
         };
         return dtoRestaurant;
     }

@@ -1,19 +1,25 @@
-import { PersonSalt } from "../App";
-import BootcampCard from "./BootcampCard"
+import RestaurantComponent from "./RestaurantComponent"
+import { Restaurant } from "../App"
 import '../Styles.css'
-import { ChangeEvent, useState } from "react";
 
 type Props = {
-  salties: PersonSalt[]
+  restaurants: Restaurant[]
 }
 
-function Gallery({ salties}: Props) {
 
+function Gallery({ restaurants }: Props) {
 
   return (
     <>
-      <h1 className="gallery-header">Gallery</h1>
-      <BootcampCard salties={salties}/>
+      <div className="resto-gallery">
+        {restaurants.map((restaurant) => {
+          return (
+            <div>
+              <RestaurantComponent restaurant={restaurant} />
+            </div>
+          )
+        })}
+      </div>
     </>
   )
 }

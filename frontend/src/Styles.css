@@ -1,42 +1,35 @@
 /* App */
-.total-app {
-    margin-top: 30px;
-    display: flex;
-    flex-direction: column;
-}
-
-#form__button-addDev {
-    width: 30%;
-    float: right;
-}
 
 /* Gallery */
-.gallery-header {
-    display: flex;
-    justify-content: center;
-}
-
-.gallery {
+.resto-gallery {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 10px;
 }
 
-/* BootcampCard */
-.gallery__bootcamp-list {
-    visibility: hidden;
-}
-
-.gallery__filter-select-bootcamp {
-    visibility: visible;
-}
-
-.bootcampCard-header {
+/* RestaurantComponent */
+.resto-element {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
+    background-color: rgb(179, 185, 197);
 }
 
-/* Person */
+.resto-element_image {
+    width: 300px;
+    height: fit-content;
+    border-radius: 3px;
+}
+
+.resto-element_name {
+    color: black;
+}
+
+.resto-element_foodType {
+    color: black;
+}
+
 .bootcamp-list__person--instructor {
     padding: 10px;
     display: flex;
@@ -51,7 +44,7 @@
 }
 
 .--selected {
-    background-color: rgb(179,185,197);  
+    background-color: rgb(179, 185, 197);
 }
 
 .developer-button {
@@ -63,5 +56,5 @@
 }
 
 .person-name {
-    color: rgb(4,114,173);
+    color: rgb(4, 114, 173);
 }
