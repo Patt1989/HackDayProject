@@ -1,5 +1,5 @@
-import RestaurantComponent from "./RestaurantComponent"
 import { Restaurant } from "../App"
+import RestaurantComponent from "./RestaurantComponent"
 import '../Styles.css'
 
 type Props = {

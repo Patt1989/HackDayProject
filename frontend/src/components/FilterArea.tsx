@@ -1,6 +1,6 @@
 import { FormEvent } from 'react';
-import '../Styles.css'
 import { Restaurant } from '../App';
+import '../Styles.css'
 
 type Props = {
     restaurants: Restaurant[],
@@ -32,12 +32,13 @@ function FilterArea({ restaurants, func }: Props) {
         }
     }
 
+
     return (
         <>
-            <div>
+            <div className='filter-area'>
                 <form id="form_filterRestaurant" onSubmit={func}>
-                    <label>Location</label>
-                    <select name="location" defaultValue="Please select location" >
+                    <label className='filter-label'>Location</label>
+                    <select className="input-field" name="location" defaultValue="Please select location" >
                         {locations.map(location => {
                             return (
                                 <option value={location}>{location}</option>
@@ -45,8 +46,8 @@ function FilterArea({ restaurants, func }: Props) {
                         })}
                     </select>
 
-                    <label>Type of food</label>
-                    <select name="foodtype" defaultValue="Please select type of food" >
+                    <label className='filter-label'>Type of food</label>
+                    <select className="input-field" name="foodtype" defaultValue="Please select type of food" >
                         <option value="All">All</option>
                         {foodTypes.map(aType => {
                             return (
@@ -55,19 +56,23 @@ function FilterArea({ restaurants, func }: Props) {
                         })}
                     </select>
 
-                    <label>Favorites?</label>
-                    <select name="favorite" defaultValue="Please select type of food" >
+                    <label className='filter-label'>Favorites?</label>
+                    <select className="input-field" name="favorite" defaultValue="Please select type of food" >
                         <option value="All">All</option>
                         <option value="1">Only favorites</option>
                         <option value="0">Only non-favorites</option>
                     </select>
 
-                    <input className="input-button" type="submit" value="Filter restaurants" />
-                    <button>Choose for me!</button>
+                    <input className="input-button" type="submit" name="submitFilter" value="Filter restaurants" />
+                    <button type="submit" name="submitRandom" >Choose for me!</button>
                 </form>
             </div>
         </>
     )
 }
+
+
+
+
 
 export default FilterArea

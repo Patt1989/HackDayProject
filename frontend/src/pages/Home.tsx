@@ -1,8 +1,8 @@
+import { Restaurant } from "../App";
+import { FormEvent } from "react";
 import Gallery from "../components/Gallery"
 import Navbar from "../components/Navbar"
 import SearchArea from "../components/SearchArea";
-import { Restaurant } from "../App";
-import { FormEvent } from "react";
 import '../Styles.css/'
 
 type Props = {

@@ -7,5 +7,4 @@ public class RestaurantContext : DbContext
     }
 
     public DbSet<backend.Models.Restaurant> Restaurants { get; set; } = default!;
-    // public DbSet<backend.Models.Genre> Dishes { get; set; } = default!;
   }

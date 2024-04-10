@@ -1,9 +1,9 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent } from 'react'
 import { Restaurant } from '../App'
-import '../Styles.css'
 import FilterArea from '../components/FilterArea'
 import Navbar from '../components/Navbar'
 import Gallery from '../components/Gallery'
+import '../Styles.css'
 
 type Props = {
   restaurants: Restaurant[],
@@ -30,7 +30,7 @@ function RandomPicker({ restaurants, filteredRestaurants, funcFilter, funcDelete
       <>
         <Navbar funcResetFilter={funcResetFilter}/>
         <FilterArea restaurants={restaurants} func={funcFilter} />
-        <text>No restaurants match your filters</text>
+        <div className='filler'><text className='announcement'>No restaurants match your filters</text></div>
       </>
     )
   }

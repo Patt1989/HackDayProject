@@ -1,11 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { FormEvent, useEffect, useState } from "react";
 import Home from "./pages/Home";
-import Edit from "./pages/Edit";
+import RandomSelection from "./pages/RandomSelection";
 import Favorites from "./pages/Favorites"
 import RandomPicker from "./pages/RandomPicker"
 import './Styles.css'
-import { FormEvent, useEffect, useState } from "react";
-import Gallery from "./components/Gallery";
 
 export type Restaurant = {
   id: number;
@@ -20,7 +19,7 @@ function App() {
 
   const [restaurants, setRestaurants] = useState<Restaurant[]>();
   const [filteredRestaurants, setFilteredRestaurants] = useState<Restaurant[]>();
-  const [filterFavorite, setFilterFavorite] = useState<string>("All")
+  const [filterFavorite, setFilterFavorite] = useState<string>("All");
 
   useEffect(() => {
     fetch('https://localhost:7175/api/Restaurants')
@@ -96,6 +95,9 @@ function App() {
   async function filterRestaurant(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
+    const natevent = event.nativeEvent as SubmitEvent;
+    const submitter = natevent.submitter as HTMLButtonElement;
+    const submitterName = submitter!.name;
     const formData = new FormData(form);
     const inputLocation = formData.get('location') as string
     const inputLocation_array = inputLocation.split(',').map(s => s.trim()) as string[];
@@ -115,13 +117,18 @@ function App() {
       selectedRestaurants = selectedRestaurants.filter(r => r.favorite == inputFavoriteInt);
     }
 
+    if (submitterName == "submitRandom") {
+      const index = Math.floor(Math.random() * selectedRestaurants.length);
+      const indexId = selectedRestaurants[index].id;
+      selectedRestaurants = selectedRestaurants.filter(r => r.id == indexId);
+    }
+
     setFilteredRestaurants(selectedRestaurants);
   }
 
   function resetFilter() {
     setFilteredRestaurants(restaurants);
   }
-
 
   if (restaurants && filteredRestaurants) {
     return (
@@ -130,10 +137,10 @@ function App() {
           <Routes>
             <Route path="/">
               <Route index element={<Home restaurants={restaurants} funcAddRestaurant={addRestaurant} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus} funcResetFilter={resetFilter} />} />
-              <Route path="favorites" element={<Favorites restaurants={restaurants} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus}  funcResetFilter={resetFilter}/>} />
-              <Route path="edit" element={<Edit funcResetFilter={resetFilter}/>} />
-              <Route path="randompicker" element={<RandomPicker restaurants={restaurants} filteredRestaurants={filteredRestaurants} funcFilter={filterRestaurant} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus} funcResetFilter={resetFilter}/>} />
-              <Route path="*" element={<Home restaurants={restaurants} funcAddRestaurant={addRestaurant} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus} funcResetFilter={resetFilter}/>} />
+              <Route path="favorites" element={<Favorites restaurants={restaurants} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus} funcResetFilter={resetFilter} />} />
+              <Route path="randomselection" element={<RandomSelection filteredRestaurants={filteredRestaurants} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus} funcResetFilter={resetFilter} />} />
+              <Route path="randompicker" element={<RandomPicker restaurants={restaurants} filteredRestaurants={filteredRestaurants} funcFilter={filterRestaurant} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus} funcResetFilter={resetFilter} />} />
+              <Route path="*" element={<Home restaurants={restaurants} funcAddRestaurant={addRestaurant} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus} funcResetFilter={resetFilter} />} />
             </Route>
           </Routes>
         </BrowserRouter>
