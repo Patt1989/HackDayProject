@@ -40,7 +40,8 @@ input:-webkit-autofill:focus {
     /* rgb(208,212,202)  */
 }
 
-.input-field, label {
+.input-field,
+label {
     padding: 0px;
 }
 
@@ -105,11 +106,13 @@ input[type=submit]:active {
 }
 
 .resto-element_location {
+    font-size: medium;
     padding-top: 0px;
-    color: rgb(107, 36, 12);  
+    color: rgb(107, 36, 12);
 }
 
 .resto-element_foodType {
+    font-size: medium;
     margin-top: 15px;
     color: rgb(107, 36, 12);
 }
@@ -140,6 +143,7 @@ input[type=submit]:active {
 .resto-element_edit-link {
     text-decoration: none !important;
     color: rgb(107, 36, 12);
+
     &:hover {
         font-weight: bold;
     }

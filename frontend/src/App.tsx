@@ -5,6 +5,7 @@ import Favorites from "./pages/Favorites"
 import RandomPicker from "./pages/RandomPicker"
 import './Styles.css'
 import { FormEvent, useEffect, useState } from "react";
+import Gallery from "./components/Gallery";
 
 export type Restaurant = {
   id: number;
@@ -18,6 +19,7 @@ export type Restaurant = {
 function App() {
 
   const [restaurants, setRestaurants] = useState<Restaurant[]>();
+  const [filteredRestaurants, setFilteredRestaurants] = useState<Restaurant[]>();
 
   useEffect(() => {
     fetch('https://localhost:7175/api/Restaurants')
@@ -25,6 +27,7 @@ function App() {
       .then(data => {
         console.log(data);
         setRestaurants(data);
+        setFilteredRestaurants(data);
       });
   }, []);
 
@@ -65,30 +68,55 @@ function App() {
     var intId: number = +id;
     await fetch(`https://localhost:7175/api/Restaurants/${id}`, { method: 'DELETE' })
       .then(() => setRestaurants((oldRestaurants) => oldRestaurants?.filter(resto => resto.id != intId)));
+    setFilteredRestaurants((oldRestaurants) => oldRestaurants?.filter(resto => resto.id != intId))
   }
 
   async function changeFavoriteStatus(id: string) {
-    var intId: number = +id;
-    await fetch(`https://localhost:7175/api/Restaurants/${id}/favorite`, { method: 'PATCH' });
-    await fetch('https://localhost:7175/api/Restaurants')
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        setRestaurants(data);
-      })
+    await fetch(`https://localhost:7175/api/Restaurants/${id}/favorite`, { method: 'PATCH' })
+    .then(response => response.json())
+    .then(data => {
+      var newRestaurants = [...restaurants!];
+      var index = newRestaurants?.findIndex(r => r.id == +id)
+      newRestaurants[index] = data;
+      setRestaurants(newRestaurants)
+
+      var newFilteredRestaurants = [...filteredRestaurants!];
+      var index = newFilteredRestaurants?.findIndex(r => r.id == +id)
+      newFilteredRestaurants[index] = data;
+      setFilteredRestaurants(newFilteredRestaurants)
+    });
   }
 
-  if (restaurants) {
+  async function filterRestaurant(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const inputLocation = formData.get('location') as string
+    const inputFoodtype = formData.get('foodtype') as string
+    const inputFavorite = formData.get('favorite') as string
+
+    var selectedRestaurants = restaurants!.filter(r => r.foodType.find(t => t == inputFoodtype));
+    setFilteredRestaurants(selectedRestaurants);
+    //   var formElement: HTMLFormElement = document.getElementById('form_addRestaurant') as HTMLFormElement;
+    //   formElement!.reset();
+    // }
+    // else {
+    //   document.getElementsByClassName("error-message")[0].innerHTML = "Please complete the entire form"
+    // }
+  }
+
+
+  if (restaurants && filteredRestaurants) {
     return (
       <>
         <BrowserRouter>
           <Routes>
             <Route path="/">
               <Route index element={<Home restaurants={restaurants} funcAddRestaurant={addRestaurant} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus} />} />
-              <Route path="favorites" element={<Favorites restaurants={restaurants} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus}/>} />
+              <Route path="favorites" element={<Favorites restaurants={restaurants} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus} />} />
               <Route path="edit" element={<Edit />} />
-              <Route path="randompicker" element={<RandomPicker />} />
-              <Route path="*" element={<Home restaurants={restaurants} funcAddRestaurant={addRestaurant} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus}/>} />
+              <Route path="randompicker" element={<RandomPicker restaurants={restaurants} filteredRestaurants={filteredRestaurants} funcFilter={filterRestaurant} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus} />} />
+              <Route path="*" element={<Home restaurants={restaurants} funcAddRestaurant={addRestaurant} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus} />} />
             </Route>
           </Routes>
         </BrowserRouter>
