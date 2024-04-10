@@ -38,7 +38,6 @@ function FilterArea({ restaurants, func }: Props) {
                 <form id="form_filterRestaurant" onSubmit={func}>
                     <label>Location</label>
                     <select name="location" defaultValue="Please select location" >
-                        <option value="All">All</option>
                         {locations.map(location => {
                             return (
                                 <option value={location}>{location}</option>
@@ -59,8 +58,8 @@ function FilterArea({ restaurants, func }: Props) {
                     <label>Favorites?</label>
                     <select name="favorite" defaultValue="Please select type of food" >
                         <option value="All">All</option>
-                        <option value="Only favorites">No</option>
-                        <option value="Only non-favorites">Yes</option>
+                        <option value="1">Only favorites</option>
+                        <option value="0">Only non-favorites</option>
                     </select>
 
                     <input className="input-button" type="submit" value="Filter restaurants" />

@@ -20,6 +20,7 @@ function App() {
 
   const [restaurants, setRestaurants] = useState<Restaurant[]>();
   const [filteredRestaurants, setFilteredRestaurants] = useState<Restaurant[]>();
+  const [filterFavorite, setFilterFavorite] = useState<string>("All")
 
   useEffect(() => {
     fetch('https://localhost:7175/api/Restaurants')
@@ -72,19 +73,24 @@ function App() {
   }
 
   async function changeFavoriteStatus(id: string) {
+    var intId: number = +id;
     await fetch(`https://localhost:7175/api/Restaurants/${id}/favorite`, { method: 'PATCH' })
-    .then(response => response.json())
-    .then(data => {
-      var newRestaurants = [...restaurants!];
-      var index = newRestaurants?.findIndex(r => r.id == +id)
-      newRestaurants[index] = data;
-      setRestaurants(newRestaurants)
+      .then(response => response.json())
+      .then(data => {
+        var newRestaurants = [...restaurants!];
+        var index = newRestaurants?.findIndex(r => r.id == +id)
+        newRestaurants[index] = data;
+        setRestaurants(newRestaurants)
 
-      var newFilteredRestaurants = [...filteredRestaurants!];
-      var index = newFilteredRestaurants?.findIndex(r => r.id == +id)
-      newFilteredRestaurants[index] = data;
-      setFilteredRestaurants(newFilteredRestaurants)
-    });
+        var newFilteredRestaurants = [...filteredRestaurants!];
+        var index = newFilteredRestaurants?.findIndex(r => r.id == +id)
+        newFilteredRestaurants[index] = data;
+        setFilteredRestaurants(newFilteredRestaurants)
+
+        if (filterFavorite != "All") {
+          setFilteredRestaurants((oldRestaurants) => oldRestaurants?.filter(resto => resto.id != intId));
+        }
+      });
   }
 
   async function filterRestaurant(event: FormEvent<HTMLFormElement>) {
@@ -92,17 +98,26 @@ function App() {
     const form = event.currentTarget;
     const formData = new FormData(form);
     const inputLocation = formData.get('location') as string
-    const inputFoodtype = formData.get('foodtype') as string
-    const inputFavorite = formData.get('favorite') as string
+    const inputLocation_array = inputLocation.split(',').map(s => s.trim()) as string[];
+    const inputCity = inputLocation_array[0];
+    const inputCountry = inputLocation_array[1];
+    var selectedRestaurants = restaurants!.filter(r => r.city == inputCity && r.country == inputCountry);
 
-    var selectedRestaurants = restaurants!.filter(r => r.foodType.find(t => t == inputFoodtype));
+    const inputFoodtype = formData.get('foodtype') as string
+    if (inputFoodtype != "All") {
+      selectedRestaurants = selectedRestaurants.filter(r => r.foodType.find(t => t == inputFoodtype));
+    }
+
+    const inputFavorite = formData.get('favorite') as string
+    setFilterFavorite(inputFavorite);
+    if (inputFavorite != "All") {
+      const inputFavoriteInt = +inputFavorite;
+      selectedRestaurants = selectedRestaurants.filter(r => r.favorite == inputFavoriteInt);
+    }
+
     setFilteredRestaurants(selectedRestaurants);
-    //   var formElement: HTMLFormElement = document.getElementById('form_addRestaurant') as HTMLFormElement;
-    //   formElement!.reset();
-    // }
-    // else {
-    //   document.getElementsByClassName("error-message")[0].innerHTML = "Please complete the entire form"
-    // }
+    // var formElement: HTMLFormElement = document.getElementById('form_filterRestaurant') as HTMLFormElement;
+    // formElement!.reset();
   }
 
 
