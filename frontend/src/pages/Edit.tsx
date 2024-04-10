@@ -1,11 +1,15 @@
 import '../Styles.css'
 import Navbar from '../components/Navbar'
 
-function Edit() {
+type Props = {
+  funcResetFilter: () => void
+}
+
+function Edit({funcResetFilter}: Props) {
 
   return (
     <>
-      <Navbar />
+      <Navbar funcResetFilter={funcResetFilter}/>
     </>
   )
 }

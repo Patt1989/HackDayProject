@@ -10,13 +10,14 @@ type Props = {
   funcAddRestaurant: (event: FormEvent<HTMLFormElement>) => void
   funcDelete: (id: string) => void,
   funcFavorite: (id: string) => void
+  funcResetFilter: () => void
 }
 
-function Home({ restaurants, funcAddRestaurant, funcDelete, funcFavorite }: Props) {
+function Home({ restaurants, funcAddRestaurant, funcDelete, funcFavorite, funcResetFilter }: Props) {
 
     return (
       <>
-        <Navbar />
+        <Navbar funcResetFilter={funcResetFilter}/>
         <SearchArea func={funcAddRestaurant} />
         <Gallery restaurants={restaurants} funcDelete={funcDelete} funcFavorite={funcFavorite} />
       </>

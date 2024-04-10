@@ -11,14 +11,15 @@ type Props = {
   funcFilter: (event: FormEvent<HTMLFormElement>) => void
   funcDelete: (id: string) => void,
   funcFavorite: (id: string) => void
+  funcResetFilter: () => void
 }
 
-function RandomPicker({ restaurants, filteredRestaurants, funcFilter, funcDelete, funcFavorite }: Props) {
+function RandomPicker({ restaurants, filteredRestaurants, funcFilter, funcDelete, funcFavorite, funcResetFilter }: Props) {
 
   if (filteredRestaurants.length > 0) {
     return (
       <>
-        <Navbar />
+        <Navbar funcResetFilter={funcResetFilter}/>
         <FilterArea restaurants={restaurants} func={funcFilter} />
         <Gallery restaurants={filteredRestaurants} funcDelete={funcDelete} funcFavorite={funcFavorite} />
       </>
@@ -27,7 +28,7 @@ function RandomPicker({ restaurants, filteredRestaurants, funcFilter, funcDelete
   else {
     return (
       <>
-        <Navbar />
+        <Navbar funcResetFilter={funcResetFilter}/>
         <FilterArea restaurants={restaurants} func={funcFilter} />
         <text>No restaurants match your filters</text>
       </>

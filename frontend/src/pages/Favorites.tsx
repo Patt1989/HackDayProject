@@ -7,18 +7,29 @@ type Props = {
   restaurants: Restaurant[],
   funcDelete: (id: string) => void,
   funcFavorite: (id: string) => void
+  funcResetFilter: () => void
 }
 
-function Favorites({ restaurants, funcDelete, funcFavorite }: Props) {
+function Favorites({ restaurants, funcDelete, funcFavorite, funcResetFilter }: Props) {
 
   var favoriteRestaurants = restaurants.filter(r => r.favorite);
 
-  return (
-    <>
-      <Navbar />
-      <Gallery restaurants={favoriteRestaurants} funcDelete={funcDelete} funcFavorite={funcFavorite} />
-    </>
-  )
+  if (favoriteRestaurants.length > 0) {
+    return (
+      <>
+        <Navbar funcResetFilter={funcResetFilter}/>
+        <Gallery restaurants={favoriteRestaurants} funcDelete={funcDelete} funcFavorite={funcFavorite} />
+      </>
+    )
+  }
+  else {
+    return (
+      <>
+        <Navbar funcResetFilter={funcResetFilter}/>
+        <text>You have no favorites</text>
+      </>
+    )
+  }
 }
 
 export default Favorites

@@ -1,7 +1,11 @@
 import { Link } from 'react-router-dom'
 import '../Styles.css'
 
-function Navbar() {
+type Props = {
+  funcResetFilter: () => void
+}
+
+function Navbar({ funcResetFilter}: Props) {
 
   return (
     <>
@@ -13,7 +17,7 @@ function Navbar() {
           <ul>
             <li><Link className='navbar_link' to="/">Home</Link></li>
             <li><Link className='navbar_link' to="/favorites">Favorites</Link></li>
-            <li><Link className='navbar_link' to="/randompicker">Choose for me!</Link></li>
+            <li><Link className='navbar_link' to="/randompicker" onClick={funcResetFilter}>Choose for me!</Link></li>
           </ul>
         </nav>
       </div>

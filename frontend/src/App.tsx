@@ -116,8 +116,10 @@ function App() {
     }
 
     setFilteredRestaurants(selectedRestaurants);
-    // var formElement: HTMLFormElement = document.getElementById('form_filterRestaurant') as HTMLFormElement;
-    // formElement!.reset();
+  }
+
+  function resetFilter() {
+    setFilteredRestaurants(restaurants);
   }
 
 
@@ -127,11 +129,11 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/">
-              <Route index element={<Home restaurants={restaurants} funcAddRestaurant={addRestaurant} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus} />} />
-              <Route path="favorites" element={<Favorites restaurants={restaurants} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus} />} />
-              <Route path="edit" element={<Edit />} />
-              <Route path="randompicker" element={<RandomPicker restaurants={restaurants} filteredRestaurants={filteredRestaurants} funcFilter={filterRestaurant} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus} />} />
-              <Route path="*" element={<Home restaurants={restaurants} funcAddRestaurant={addRestaurant} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus} />} />
+              <Route index element={<Home restaurants={restaurants} funcAddRestaurant={addRestaurant} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus} funcResetFilter={resetFilter} />} />
+              <Route path="favorites" element={<Favorites restaurants={restaurants} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus}  funcResetFilter={resetFilter}/>} />
+              <Route path="edit" element={<Edit funcResetFilter={resetFilter}/>} />
+              <Route path="randompicker" element={<RandomPicker restaurants={restaurants} filteredRestaurants={filteredRestaurants} funcFilter={filterRestaurant} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus} funcResetFilter={resetFilter}/>} />
+              <Route path="*" element={<Home restaurants={restaurants} funcAddRestaurant={addRestaurant} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus} funcResetFilter={resetFilter}/>} />
             </Route>
           </Routes>
         </BrowserRouter>
