@@ -3,7 +3,12 @@ import Gallery from "./components/Gallery"
 import Navbar from "./components/Navbar"
 import SearchArea from "./components/SearchArea";
 import './Styles.css'
-
+import ReactDOM from "react-dom/client";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Edit from "./pages/Edit";
+import Favorites from "./pages/Favorites"
+import RandomPicker from "./pages/RandomPicker"
 
 export type Restaurant = {
   id: number;
@@ -36,7 +41,7 @@ function App() {
     const inputCountry = formData.get('country_input') as string
     const inputFoodtype = formData.get('foodtype_input') as string
     const inputFoodtype_array = inputFoodtype.split(',').map(s => s.trim()) as string[];
-    
+
     if (inputName && inputCity && inputCountry && inputFoodtype) {
       document.getElementsByClassName("error-message")[0].innerHTML = ""
 
@@ -52,8 +57,8 @@ function App() {
           setRestaurants([...restaurants!, data])
         });
 
-        var formElement: HTMLFormElement = document.getElementById('form_addRestaurant') as HTMLFormElement;
-        formElement!.reset();
+      var formElement: HTMLFormElement = document.getElementById('form_addRestaurant') as HTMLFormElement;
+      formElement!.reset();
     }
     else {
       document.getElementsByClassName("error-message")[0].innerHTML = "Please complete the entire form"
@@ -73,7 +78,8 @@ function App() {
       .then(response => response.json())
       .then(data => {
         console.log(data);
-        setRestaurants(data);})
+        setRestaurants(data);
+      })
 
     // var selectedHeartElement = document.getElementById("heart-" + id);
     // if (selectedHeartElement?.classList.contains("heart")) {
@@ -92,6 +98,17 @@ function App() {
         <Navbar />
         <SearchArea func={addRestaurant} />
         <Gallery restaurants={restaurants} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus} />
+
+        <BrowserRouter>
+          <Routes>
+            <Route path="/">
+              <Route index element={<Home />} />
+              <Route path="favorites" element={<Favorites />} />
+              <Route path="edit" element={<Edit />} />
+              <Route path="randompicker" element={<RandomPicker />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
       </>
     )
   }
