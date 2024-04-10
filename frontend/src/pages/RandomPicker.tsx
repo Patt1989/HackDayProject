@@ -1,10 +1,11 @@
 import '../Styles.css'
+import Navbar from '../components/Navbar'
 
 function RandomPicker() {
 
   return (
     <>
-      <h1>RandomPicker</h1>
+      <Navbar />
     </>
   )
 }

@@ -1,14 +1,10 @@
-import { FormEvent, useEffect, useState } from "react";
-import Gallery from "./components/Gallery"
-import Navbar from "./components/Navbar"
-import SearchArea from "./components/SearchArea";
-import './Styles.css'
-import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Edit from "./pages/Edit";
 import Favorites from "./pages/Favorites"
 import RandomPicker from "./pages/RandomPicker"
+import './Styles.css'
+import { FormEvent, useEffect, useState } from "react";
 
 export type Restaurant = {
   id: number;
@@ -80,32 +76,19 @@ function App() {
         console.log(data);
         setRestaurants(data);
       })
-
-    // var selectedHeartElement = document.getElementById("heart-" + id);
-    // if (selectedHeartElement?.classList.contains("heart")) {
-    //   selectedHeartElement.classList.remove("heart");
-    //   selectedHeartElement.classList.add("heart-false");
-    // }
-    // if (selectedHeartElement?.classList.contains("heart-false")) {
-    //   selectedHeartElement.classList.remove("heart-false");
-    //   selectedHeartElement.classList.add("heart");
-    // }
   }
 
   if (restaurants) {
     return (
       <>
-        <Navbar />
-        <SearchArea func={addRestaurant} />
-        <Gallery restaurants={restaurants} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus} />
-
         <BrowserRouter>
           <Routes>
             <Route path="/">
-              <Route index element={<Home />} />
-              <Route path="favorites" element={<Favorites />} />
+              <Route index element={<Home restaurants={restaurants} funcAddRestaurant={addRestaurant} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus} />} />
+              <Route path="favorites" element={<Favorites restaurants={restaurants} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus}/>} />
               <Route path="edit" element={<Edit />} />
               <Route path="randompicker" element={<RandomPicker />} />
+              <Route path="*" element={<Home restaurants={restaurants} funcAddRestaurant={addRestaurant} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus}/>} />
             </Route>
           </Routes>
         </BrowserRouter>

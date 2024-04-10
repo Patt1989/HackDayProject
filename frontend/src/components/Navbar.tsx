@@ -1,7 +1,7 @@
+import { Link } from 'react-router-dom'
 import '../Styles.css'
 
 function Navbar() {
-
 
   return (
     <>
@@ -11,9 +11,9 @@ function Navbar() {
             <li className='navbar_header'><strong>Where to eat?</strong></li>
           </ul>
           <ul>
-            <li><a className='navbar_link contrast' href="#">Home</a></li>
-            <li><a className='navbar_link' href="#">Favorites</a></li>
-            <li><a className='navbar_link' href="#">Choose for me!</a></li>
+            <li><Link className='navbar_link' to="/">Home</Link></li>
+            <li><Link className='navbar_link' to="/favorites">Favorites</Link></li>
+            <li><Link className='navbar_link' to="/randompicker">Choose for me!</Link></li>
           </ul>
         </nav>
       </div>

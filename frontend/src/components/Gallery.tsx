@@ -8,7 +8,6 @@ type Props = {
   funcFavorite: (id: string) => void
 }
 
-
 function Gallery({ restaurants, funcDelete, funcFavorite }: Props) {
 
   return (

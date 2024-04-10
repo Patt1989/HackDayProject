@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Restaurant } from '../App'
 import '../Styles.css'
 import { RiHeart3Fill } from 'react-icons/ri';
@@ -33,7 +34,7 @@ function RestaurantComponent({ restaurant, funcDelete, funcFavorite }: Props) {
         )})}
         </h5>
         <div className='resto-element_buttons'>
-          <button><a href="#" className='resto-element_edit-link'>Edit</a></button>
+          <button><Link className='resto-element_edit-link' to="/edit">Edit</Link></button>
           <button className='resto-element_delete-button' onClick={() => funcDelete(stringId)}>Delete</button>
           <button className='resto-element_favorite-button' onClick={() => funcFavorite(stringId)}><RiHeart3Fill id={heartId} className={className} /></button>
         </div>

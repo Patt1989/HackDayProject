@@ -1,10 +1,11 @@
 import '../Styles.css'
+import Navbar from '../components/Navbar'
 
 function Edit() {
 
   return (
     <>
-      <h1>Edit</h1>
+      <Navbar />
     </>
   )
 }

@@ -7,7 +7,6 @@ type Props = {
 
 function SearchArea({ func }: Props) {
 
-
   return (
     <>
       <div className='search-area'>
