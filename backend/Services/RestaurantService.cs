@@ -26,6 +26,8 @@ public class RestaurantService
         var restaurant = new Restaurant
         {
             Name = dtoRestaurant.Name,
+            City = dtoRestaurant.City,
+            Country = dtoRestaurant.Country,
             FoodType = dtoRestaurant.FoodType
         };
 
@@ -52,7 +54,7 @@ public class RestaurantService
             return null;
         }
 
-        var restaurants = await _context.Restaurants.Where(r => r.FoodType == foodType).ToListAsync();
+        var restaurants = await _context.Restaurants.Where(r => r.FoodType.Contains(foodType)).ToListAsync();
         return restaurants;
     }
 
@@ -85,42 +87,32 @@ public class RestaurantService
         return restaurant;
     }
 
-    // // PUT artist of CD
-    // public async Task<DTORequestCD> PutCDArtistById(int id, string artist)
-    // {
-    //     if (_context.CDs == null)
-    //     {
-    //         throw new FileNotFoundException("Table CDs does not exist");
-    //     }
+    public async Task<Restaurant> PatchFavoriteById(int id)
+    {
+        if (_context.Restaurants == null)
+        {
+            throw new FileNotFoundException("Table Restaurants does not exist");
+        }
 
-    //     var cd = await _context.CDs.FindAsync(id);
-    //     if (cd == null)
-    //     {
-    //         throw new FileNotFoundException("This CD does not exist");
-    //     }
-    //     cd.ArtistName = artist;
+        var restaurant = await _context.Restaurants.FindAsync(id);
+        if (restaurant == null)
+        {
+            throw new FileNotFoundException("This restaurant does not exist");
+        }
 
-    //     try
-    //     {
-    //         _context.CDs.Update(cd);
-    //         await _context.SaveChangesAsync();
-
-    //         var genre = await _context.Genres.FirstOrDefaultAsync(g => g.Id == cd.GenreId);
-    //         var dtoCD = new DTORequestCD
-    //         {
-    //             Name = cd.Name,
-    //             ArtistName = cd.ArtistName,
-    //             Description = cd.Description,
-    //             PurchasedDate = cd.PurchasedDate,
-    //             Genre = genre.Name
-    //         };
-    //         return dtoCD;
-    //     }
-    //     catch
-    //     {
-    //         throw new ArgumentException("Something went wrong, cd could not be updated");
-    //     }
-    // }
+        var favorite = restaurant.Favorite;
+        restaurant.Favorite = !favorite;
+        try
+        {
+            _context.Restaurants.Update(restaurant);
+            await _context.SaveChangesAsync();
+            return restaurant;
+        }
+        catch
+        {
+            throw new ArgumentException("Something went wrong, restaurant could not be updated");
+        }
+    }
 
     // // PUT genre of CD
     // public async Task<DTORequestCD> PutCDGenreById(int id, string genre)

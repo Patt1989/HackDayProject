@@ -70,23 +70,22 @@ namespace backend.Controllers
             return result;
         }
 
-        //     // PUT: api/CDs/{id}/artist
-        //     [HttpPut("{id}/artist")]
-        //     public async Task<ActionResult<DTORequestCD>> PutCDArtist(int id, string artist)
-        //     {
-        //         try
-        //         {
-        //             return await _service.PutCDArtistById(id, artist);
-        //         }
-        //         catch (FileNotFoundException e)
-        //         {
-        //             return NotFound(e.Message);
-        //         }
-        //         catch (ArgumentException e)
-        //         {
-        //             return BadRequest(e.Message);
-        //         }
-        //     }
+        [HttpPatch("{id}/favorite")]
+        public async Task<ActionResult<Restaurant>> PatchRestaurantFavorite(int id)
+        {
+            try
+            {
+                return await _service.PatchFavoriteById(id);
+            }
+            catch (FileNotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (ArgumentException e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
 
         //     // PUT: api/CDs/{id}/genre
         //     [HttpPut("{id}/genre")]

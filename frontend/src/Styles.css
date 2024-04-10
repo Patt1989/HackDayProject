@@ -1,26 +1,25 @@
 /* App */
 body {
-    background-color: rgb(238,238,238);
+    background-color: rgb(238, 238, 238);
     background-size: cover;
-    background-position: center top; 
+    background-position: center top;
 }
 
 /* Navbar */
 .navbar-container {
-    border-bottom: 2px solid rgb(107,36,12);
+    border-bottom: 2px solid rgb(107, 36, 12);
     padding: 10px 0px 10px 0px;
-    /* background-color: rgb(255,228,201); */
 }
 
 .navbar_header {
     font-size: xx-large;
-    color: rgb(107,36,12);
+    color: rgb(107, 36, 12);
 }
 
 .navbar_link {
     text-decoration: none !important;
     font-size: large;
-    color: rgb(107,36,12);
+    color: rgb(107, 36, 12);
 }
 
 .navbar_link:hover {
@@ -31,30 +30,42 @@ body {
 .search-area {
     padding-top: 20px;
     padding-bottom: 10px;
-    border-bottom: 2px solid rgb(107,36,12);
+    border-bottom: 2px solid rgb(107, 36, 12);
 }
 
-.input-field {
-    background-color: white;
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+    background-color: transparent !important;
+    -webkit-box-shadow: 0 0 0 50px white inset;
+    /* rgb(208,212,202)  */
+}
+
+.input-field, label {
+    padding: 0px;
 }
 
 .input-field:focus {
     outline: none !important;
-    border:2px solid rgb(41,75,40);
+    border: 2px solid rgb(41, 75, 40);
     box-shadow: 0 0 0 0;
 }
 
 input[type=submit] {
-    background-color: rgb(41,75,40);
-    border: 2px solid rgb(41,75,40);
+    background-color: rgb(41, 75, 40);
+    border: 2px solid rgb(41, 75, 40);
     color: white
 }
 
 input[type=submit]:focus {
-    background-color: rgb(41,75,40);
-    border: 2px solid rgb(41,75,40);
+    background-color: rgb(41, 75, 40);
+    border: 2px solid rgb(41, 75, 40);
     color: white;
     box-shadow: 0 0 0 0;
+}
+
+input[type=submit]:active {
+    /* box-shadow: 0 5px #666; */
+    transform: translateY(3px);
 }
 
 /* Gallery */
@@ -67,13 +78,17 @@ input[type=submit]:focus {
 
 /* RestaurantComponent */
 .resto-element {
-    padding: 10px;
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 15px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: rgb(238,238,238);
-    border: 1px solid rgb(107,36,12);
+    background-color: rgb(238, 238, 238);
+    border: 1px solid rgb(107, 36, 12);
+    border-radius: 3px;
 }
 
 .resto-element_image {
@@ -83,64 +98,82 @@ input[type=submit]:focus {
 }
 
 .resto-element_name {
-    color: rgb(107,36,12);
+    padding-top: 15px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+    color: rgb(107, 36, 12);
+}
+
+.resto-element_location {
+    padding-top: 0px;
+    color: rgb(107, 36, 12);  
 }
 
 .resto-element_foodType {
-    margin-top: 5px;
-    color: rgb(107,36,12);
+    margin-top: 15px;
+    color: rgb(107, 36, 12);
+}
+
+.resto-element_aFoodtype {
+    border-right: 1px solid rgb(107, 36, 12);
 }
 
 .resto-element button {
-    visibility: hidden;
-    background-color: rgb(238,238,238);
-    border: 2px solid rgb(107,36,12);
-    color: rgb(107,36,12)
+    /* visibility: hidden; */
+    background-color: rgb(238, 238, 238);
+    border: 2px solid rgb(107, 36, 12);
+    color: rgb(107, 36, 12);
+    box-shadow: 0 0 0 0;
 }
 
-.resto-element:hover button {
-    visibility: visible;
-    background-color: rgb(238,238,238);
-    border: 2px solid rgb(107,36,12);
-    color: rgb(107,36,12)
+.resto-element button:active {
+    /* box-shadow: 0 5px rgb(107, 36, 12); */
+    transform: translateY(3px);
 }
 
 .resto-element_buttons {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     gap: 10px;
 }
 
-
-
-
-
-.bootcamp-list__person--instructor {
-    padding: 10px;
-    display: flex;
-    justify-content: flex-start;
+.resto-element_edit-link {
+    text-decoration: none !important;
+    color: rgb(107, 36, 12);
+    &:hover {
+        font-weight: bold;
+    }
 }
 
-.bootcamp-list__person--developer {
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    border-radius: 3px;
+.resto-element_delete-button:hover {
+    font-weight: bold;
 }
 
-.--selected {
-    background-color: rgb(179, 185, 197);
+.resto-element_favorite-button {
+    padding-right: 0px;
+    padding-left: 0px;
 }
 
-.developer-button {
-    visibility: hidden;
-}
-
-.bootcamp-list__person__button-delete {
+.heart {
     visibility: visible;
+    padding: 0px;
+    font-size: 35px;
+    color: rgb(107, 36, 12);
+    width: 60px;
+    outline: none;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: bold;
 }
 
-.person-name {
-    color: rgb(4, 114, 173);
+.heart-false {
+    visibility: visible;
+    padding: 0px;
+    font-size: 35px;
+    color: rgb(182, 173, 173);
+    width: 60px;
+    outline: none;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: bold;
 }

@@ -8,7 +8,10 @@ import './Styles.css'
 export type Restaurant = {
   id: number;
   name: string;
-  foodType: string;
+  city: string,
+  country: string,
+  foodType: string[];
+  favorite: number;
 }
 
 function App() {
@@ -18,9 +21,10 @@ function App() {
   useEffect(() => {
     fetch('https://localhost:7175/api/Restaurants')
       .then(response => response.json())
-      .then(data => 
-        setRestaurants(data))
-  ;
+      .then(data => {
+        console.log(data);
+        setRestaurants(data);
+      });
   }, []);
 
   async function addRestaurant(event: FormEvent<HTMLFormElement>) {
@@ -28,15 +32,18 @@ function App() {
     const form = event.currentTarget;
     const formData = new FormData(form);
     const inputName = formData.get('restaurantname_input') as string
+    const inputCity = formData.get('city_input') as string
+    const inputCountry = formData.get('country_input') as string
     const inputFoodtype = formData.get('foodtype_input') as string
-
-    if (inputName && inputFoodtype) {
+    const inputFoodtype_array = inputFoodtype.split(',').map(s => s.trim()) as string[];
+    
+    if (inputName && inputCity && inputCountry && inputFoodtype) {
       document.getElementsByClassName("error-message")[0].innerHTML = ""
 
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: inputName, foodType: inputFoodtype })
+        body: JSON.stringify({ name: inputName, city: inputCity, country: inputCountry, foodType: inputFoodtype_array })
       };
       await fetch('https://localhost:7175/api/Restaurants', requestOptions)
         .then(response => response.json())
@@ -44,16 +51,39 @@ function App() {
           console.log(data);
           setRestaurants([...restaurants!, data])
         });
+
+        var formElement: HTMLFormElement = document.getElementById('form_addRestaurant') as HTMLFormElement;
+        formElement!.reset();
     }
     else {
-      document.getElementsByClassName("error-message")[0].innerHTML = "Please provide valid input"
+      document.getElementsByClassName("error-message")[0].innerHTML = "Please complete the entire form"
     }
   }
 
-  function deleteRestaurant(id: string) {
+  async function deleteRestaurant(id: string) {
     var intId: number = +id;
-    fetch(`https://localhost:7175/api/Restaurants/${id}`, { method: 'DELETE' })
+    await fetch(`https://localhost:7175/api/Restaurants/${id}`, { method: 'DELETE' })
       .then(() => setRestaurants((oldRestaurants) => oldRestaurants?.filter(resto => resto.id != intId)));
+  }
+
+  async function changeFavoriteStatus(id: string) {
+    var intId: number = +id;
+    await fetch(`https://localhost:7175/api/Restaurants/${id}/favorite`, { method: 'PATCH' });
+    await fetch('https://localhost:7175/api/Restaurants')
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        setRestaurants(data);})
+
+    // var selectedHeartElement = document.getElementById("heart-" + id);
+    // if (selectedHeartElement?.classList.contains("heart")) {
+    //   selectedHeartElement.classList.remove("heart");
+    //   selectedHeartElement.classList.add("heart-false");
+    // }
+    // if (selectedHeartElement?.classList.contains("heart-false")) {
+    //   selectedHeartElement.classList.remove("heart-false");
+    //   selectedHeartElement.classList.add("heart");
+    // }
   }
 
   if (restaurants) {
@@ -61,7 +91,7 @@ function App() {
       <>
         <Navbar />
         <SearchArea func={addRestaurant} />
-        <Gallery restaurants={restaurants} func={deleteRestaurant} />
+        <Gallery restaurants={restaurants} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus} />
       </>
     )
   }
