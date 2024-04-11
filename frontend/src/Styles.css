@@ -259,8 +259,7 @@ button[type=submit]:active {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 30px;
-
+    gap: 10px;
 }
 
 .edit-announcement-container button {
@@ -290,6 +289,10 @@ button[type=submit]:active {
     
     .resto-element_foodType {
         font-size: small;
+    }
+
+    .edit-announcement-container {
+        gap: 30px;
     }
 }
 
