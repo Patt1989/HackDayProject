@@ -14,7 +14,7 @@ public static class SeedData
 
             string[] resto_names = { "Mahalo", "Konditori Lyran", "Kafe Plattan", "Greasy Spoon", "Morfar Ginko", "Falloumi" };
             string[] resto_foodTypes1 = { "Bakery", "Breakfast" };
-            string[] resto_foodTypes2 = { "Bakery", "Sandwich" };
+            string[] resto_foodTypes2 = { "Sandwich", "Bakery" };
             string[] resto_foodTypes3 = { "Bakery" };
             string[] resto_foodTypes4 = { "Breakfast" };
             string[] resto_foodTypes5 = { "Pizza" };
@@ -39,7 +39,7 @@ public static class SeedData
             string[] resto_names_NL = { "Anne&Max", "Het Slachthuis", "Lab071", "Logica" };
             string[] resto_foodTypes_NL1 = { "Bakery", "Breakfast", "Sandwich" };
             string[] resto_foodTypes_NL2 = { "Burgers", "Falafel" };
-            string[] resto_foodTypes_NL3 = { "Pizza" };
+            string[] resto_foodTypes_NL3 = { "Pizza", "Sandwich" };
             string[] resto_foodTypes_NL4 = { "Breakfast", "Sandwich" };
             string[][] resto_foodTypes_NL = { resto_foodTypes_NL1, resto_foodTypes_NL2, resto_foodTypes_NL3, resto_foodTypes_NL4};
 
