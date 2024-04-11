@@ -86,22 +86,21 @@ namespace backend.Controllers
             }
         }
 
-        //     // PUT: api/CDs/{id}
-        //     [HttpPut("{id}")]
-        //     public async Task<ActionResult<Restaurant> PutRestaurant(int id, Restaurant restaurant)
-        //     {
-        //         try
-        //         {
-        //             return await _service.PutRestaurantById(id, restaurant);
-        //         }
-        //         catch (FileNotFoundException e)
-        //         {
-        //             return NotFound(e.Message);
-        //         }
-        //         catch (ArgumentException e)
-        //         {
-        //             return BadRequest(e.Message);
-        //         }
-        //     }
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Restaurant>> PutRestaurant(int id, DTORequestRestaurant restaurant)
+            {
+                try
+                {
+                    return await _service.PutRestaurantById(id, restaurant);
+    }
+                catch (FileNotFoundException e)
+                {
+                    return NotFound(e.Message);
+}
+                catch (ArgumentException e)
+                {
+                    return BadRequest(e.Message);
+                }
+            }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.IO.Compression;
 using backend.DTOs;
 using backend.Models;
+using SQLitePCL;
 
 namespace backend.Services;
 
@@ -114,32 +115,42 @@ public class RestaurantService
         }
     }
 
-    // public async Task<Restaurant> PutRestaurantById(int id, Restaurant restaurant)
-    // {
-    //     if (_context.Restaurants == null)
-    //     {
-    //         throw new FileNotFoundException("Table Restaurants does not exist");
-    //     }
+    public async Task<Restaurant> PutRestaurantById(int id, DTORequestRestaurant dtoRestaurant)
+    {
+        if (_context.Restaurants == null)
+        {
+            throw new FileNotFoundException("Table Restaurants does not exist");
+        }
 
-    //     var oldRestaurant = await _context.Restaurants.FindAsync(id);
-    //     if (oldRestaurant == null)
-    //     {
-    //         throw new FileNotFoundException("This Restaurant does not exist");
-    //     }
+        var restaurant = await _context.Restaurants.FindAsync(id);
+        if (restaurant == null)
+        {
+            throw new FileNotFoundException("This Restaurant does not exist");
+        }
 
-    //     oldRestaurant = restaurant;
+        restaurant = fromDTOToRestaurant(dtoRestaurant, restaurant);
 
-    //     try
-    //     {
-    //         _context.Restaurants.Update(oldRestaurant);
-    //         await _context.SaveChangesAsync();
+        try
+        {
+            _context.Restaurants.Update(restaurant);
+            await _context.SaveChangesAsync();
 
-    //         return oldRestaurant;
-    //     }
-    //     catch
-    //     {
-    //         throw new ArgumentException("Something went wrong, restaurant could not be updated");
-    //     }
-    // }
+            return restaurant;
+        }
+        catch
+        {
+            throw new ArgumentException("Something went wrong, restaurant could not be updated");
+        }
+    }
+
+    private Restaurant fromDTOToRestaurant(DTORequestRestaurant dtoRestaurant, Restaurant restaurant) 
+    {
+        restaurant.Name = dtoRestaurant.Name;
+        restaurant. City = dtoRestaurant.City;
+        restaurant.Country = dtoRestaurant.Country;
+        restaurant.FoodType = dtoRestaurant.FoodType;
+
+        return restaurant;
+    }
 
 }
