@@ -26,7 +26,7 @@ function Favorites({ restaurants, funcDelete, funcFavorite, funcResetFilter }: P
     return (
       <>
         <Navbar funcResetFilter={funcResetFilter}/>
-        <div className='filler'><text className='announcement'>You have no favorites</text></div>
+        <div className='filler-long'><text className='announcement'>You have no favorites</text></div>
       </>
     )
   }

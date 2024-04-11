@@ -16,21 +16,31 @@ type Props = {
 
 function RandomPicker({ restaurants, filteredRestaurants, funcFilter, funcDelete, funcFavorite, funcResetFilter }: Props) {
 
+  if (filteredRestaurants.length > 4) {
+    return (
+      <>
+        <Navbar funcResetFilter={funcResetFilter} />
+        <FilterArea restaurants={restaurants} func={funcFilter} />
+        <Gallery restaurants={filteredRestaurants} funcDelete={funcDelete} funcFavorite={funcFavorite} />
+      </>
+    )
+  }
   if (filteredRestaurants.length > 0) {
     return (
       <>
-        <Navbar funcResetFilter={funcResetFilter}/>
+        <Navbar funcResetFilter={funcResetFilter} />
         <FilterArea restaurants={restaurants} func={funcFilter} />
         <Gallery restaurants={filteredRestaurants} funcDelete={funcDelete} funcFavorite={funcFavorite} />
+        <div className='filler-short'></div>
       </>
     )
   }
   else {
     return (
       <>
-        <Navbar funcResetFilter={funcResetFilter}/>
+        <Navbar funcResetFilter={funcResetFilter} />
         <FilterArea restaurants={restaurants} func={funcFilter} />
-        <div className='filler'><text className='announcement'>No restaurants match your filters</text></div>
+        <div className='filler-short'><text className='announcement'>No restaurants match your filters</text></div>
       </>
     )
   }

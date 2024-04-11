@@ -86,13 +86,13 @@ namespace backend.Controllers
             }
         }
 
-        //     // PUT: api/CDs/{id}/genre
-        //     [HttpPut("{id}/genre")]
-        //     public async Task<ActionResult<DTORequestCD>> PutCDGenre(int id, string genre)
+        //     // PUT: api/CDs/{id}
+        //     [HttpPut("{id}")]
+        //     public async Task<ActionResult<Restaurant> PutRestaurant(int id, Restaurant restaurant)
         //     {
         //         try
         //         {
-        //             return await _service.PutCDGenreById(id, genre);
+        //             return await _service.PutRestaurantById(id, restaurant);
         //         }
         //         catch (FileNotFoundException e)
         //         {

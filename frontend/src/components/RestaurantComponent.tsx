@@ -19,6 +19,15 @@ function RestaurantComponent({ restaurant, funcDelete, funcFavorite }: Props) {
   else
     var className = "heart-false";
 
+  var foodtypeString = "";
+  for (let i = 0; i < restaurant.foodType.length; i++) {
+    var aType = restaurant.foodType[i];
+    if (i == restaurant.foodType.length - 1)
+      foodtypeString = foodtypeString + aType;
+    else
+      foodtypeString = foodtypeString + aType + " | ";
+  }
+
   return (
     <>
       <div className='resto-element'>
@@ -26,13 +35,14 @@ function RestaurantComponent({ restaurant, funcDelete, funcFavorite }: Props) {
         <h5 className='resto-element_location'>{restaurant.city}, {restaurant.country}</h5>
         <img className="resto-element_image" src={url} />
         <div className='resto-element_allFoodTypes'>
-          <h5 className='resto-element_foodType'>
-            <text>| </text>
+          <h5 >
+            {/* <text>| </text>
             {restaurant.foodType.map((aFoodtype) => {
               return (
                 <text>{aFoodtype} | </text>
               )
-            })}
+            })} */}
+            <text className='resto-element_foodType'><span className="shrink">{foodtypeString}</span></text>
           </h5>
         </div>
         <div className='resto-element_buttons'>

@@ -114,49 +114,31 @@ public class RestaurantService
         }
     }
 
-    // // PUT genre of CD
-    // public async Task<DTORequestCD> PutCDGenreById(int id, string genre)
+    // public async Task<Restaurant> PutRestaurantById(int id, Restaurant restaurant)
     // {
-    //     if (_context.CDs == null)
+    //     if (_context.Restaurants == null)
     //     {
-    //         throw new FileNotFoundException("Table CDs does not exist");
+    //         throw new FileNotFoundException("Table Restaurants does not exist");
     //     }
 
-    //     var cd = await _context.CDs.FindAsync(id);
-    //     if (cd == null)
+    //     var oldRestaurant = await _context.Restaurants.FindAsync(id);
+    //     if (oldRestaurant == null)
     //     {
-    //         throw new FileNotFoundException("This CD does not exist");
+    //         throw new FileNotFoundException("This Restaurant does not exist");
     //     }
 
-    //     var findGenre = await _context.Genres.FirstOrDefaultAsync(g => g.Name == genre);
-    //     if (findGenre is null)
-    //     {
-    //         findGenre = new Genre
-    //         {
-    //             Name = genre
-    //         };
-    //     }
-    //     cd.Genre = findGenre;
+    //     oldRestaurant = restaurant;
 
     //     try
     //     {
-    //         _context.CDs.Update(cd);
+    //         _context.Restaurants.Update(oldRestaurant);
     //         await _context.SaveChangesAsync();
 
-    //         var newGenre = await _context.Genres.FirstOrDefaultAsync(g => g.Id == cd.GenreId);
-    //         var dtoCD = new DTORequestCD
-    //         {
-    //             Name = cd.Name,
-    //             ArtistName = cd.ArtistName,
-    //             Description = cd.Description,
-    //             PurchasedDate = cd.PurchasedDate,
-    //             Genre = newGenre.Name
-    //         };
-    //         return dtoCD;
+    //         return oldRestaurant;
     //     }
     //     catch
     //     {
-    //         throw new ArgumentException("Something went wrong, cd could not be updated");
+    //         throw new ArgumentException("Something went wrong, restaurant could not be updated");
     //     }
     // }
 
