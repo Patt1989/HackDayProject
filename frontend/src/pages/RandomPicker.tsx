@@ -8,20 +8,21 @@ import '../Styles.css'
 type Props = {
   restaurants: Restaurant[],
   filteredRestaurants: Restaurant[],
+  funcSetFilteredRestaurants: (id: string) => void,
   funcFilter: (event: FormEvent<HTMLFormElement>) => void
   funcDelete: (id: string) => void,
   funcFavorite: (id: string) => void
   funcResetFilter: () => void
 }
 
-function RandomPicker({ restaurants, filteredRestaurants, funcFilter, funcDelete, funcFavorite, funcResetFilter }: Props) {
+function RandomPicker({ restaurants, filteredRestaurants, funcSetFilteredRestaurants, funcFilter, funcDelete, funcFavorite, funcResetFilter }: Props) {
 
   if (filteredRestaurants.length > 4) {
     return (
       <>
         <Navbar funcResetFilter={funcResetFilter} />
         <FilterArea restaurants={restaurants} func={funcFilter} />
-        <Gallery restaurants={filteredRestaurants} funcDelete={funcDelete} funcFavorite={funcFavorite} />
+        <Gallery restaurants={filteredRestaurants} funcSetFilteredRestaurants={funcSetFilteredRestaurants} funcDelete={funcDelete} funcFavorite={funcFavorite} />
       </>
     )
   }
@@ -30,7 +31,7 @@ function RandomPicker({ restaurants, filteredRestaurants, funcFilter, funcDelete
       <>
         <Navbar funcResetFilter={funcResetFilter} />
         <FilterArea restaurants={restaurants} func={funcFilter} />
-        <Gallery restaurants={filteredRestaurants} funcDelete={funcDelete} funcFavorite={funcFavorite} />
+        <Gallery restaurants={filteredRestaurants} funcSetFilteredRestaurants={funcSetFilteredRestaurants} funcDelete={funcDelete} funcFavorite={funcFavorite} />
         <div className='filler-short'></div>
       </>
     )

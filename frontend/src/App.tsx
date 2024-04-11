@@ -1,10 +1,12 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { FormEvent, useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { FormEvent, useEffect, useLayoutEffect, useState } from "react";
 import Home from "./pages/Home";
 import RandomSelection from "./pages/RandomSelection";
 import Favorites from "./pages/Favorites"
 import RandomPicker from "./pages/RandomPicker"
 import './Styles.css'
+import Edit from "./pages/Edit";
+import { HiDesktopComputer } from "react-icons/hi";
 
 export type Restaurant = {
   id: number;
@@ -25,7 +27,6 @@ function App() {
     fetch('https://localhost:7175/api/Restaurants')
       .then(response => response.json())
       .then(data => {
-        console.log(data);
         setRestaurants(data);
         setFilteredRestaurants(data);
       });
@@ -69,6 +70,45 @@ function App() {
     await fetch(`https://localhost:7175/api/Restaurants/${id}`, { method: 'DELETE' })
       .then(() => setRestaurants((oldRestaurants) => oldRestaurants?.filter(resto => resto.id != intId)));
     setFilteredRestaurants((oldRestaurants) => oldRestaurants?.filter(resto => resto.id != intId))
+  }
+
+  async function editRestaurant(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    const inputName = formData.get('restaurantname_input-edit') as string
+    const inputCity = formData.get('city_input-edit') as string
+    const inputCountry = formData.get('country_input-edit') as string
+    const inputFoodtype = formData.get('foodtype_input-edit') as string
+    const inputFoodtype_array = inputFoodtype.split(',').map(s => s.trim()) as string[];
+    const id = form.id;
+
+    if (inputName && inputCity && inputCountry && inputFoodtype) {
+      document.getElementsByClassName("error-message")[0].innerHTML = ""
+
+      const requestOptions = {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: inputName, city: inputCity, country: inputCountry, foodType: inputFoodtype_array })
+      };
+      await fetch(`https://localhost:7175/api/Restaurants/${id}/`, requestOptions)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          var newRestaurants = [...restaurants!];
+          var index = newRestaurants?.findIndex(r => r.id == +id)
+          newRestaurants[index] = data;
+          setRestaurants(newRestaurants)
+        });
+
+      var hiddenText = document.getElementsByClassName("hidden")[0];
+      hiddenText.classList.remove("hidden");
+      hiddenText.classList.add("visible")
+    }
+    else {
+      document.getElementsByClassName("error-message")[0].innerHTML = "Please complete the entire form"
+    }
   }
 
   async function changeFavoriteStatus(id: string) {
@@ -126,8 +166,19 @@ function App() {
     setFilteredRestaurants(selectedRestaurants);
   }
 
-  function resetFilter() {
-    setFilteredRestaurants(restaurants);
+  async function resetFilter() {
+    await setFilteredRestaurants(restaurants);
+    var visibleElement = document.getElementsByClassName("visible")[0];
+    if (visibleElement) {
+      visibleElement.classList.remove("visible");
+      visibleElement.classList.add("hidden");
+    }
+  }
+
+  async function changeFilteredRestaurants(id: string) {
+    const intId = +id;
+    const restoToEdit = restaurants!.filter(r => r.id == intId);
+    await setFilteredRestaurants(restoToEdit);
   }
 
   if (restaurants && filteredRestaurants) {
@@ -136,11 +187,12 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/">
-              <Route index element={<Home restaurants={restaurants} funcAddRestaurant={addRestaurant} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus} funcResetFilter={resetFilter} />} />
-              <Route path="favorites" element={<Favorites restaurants={restaurants} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus} funcResetFilter={resetFilter} />} />
-              <Route path="randomselection" element={<RandomSelection filteredRestaurants={filteredRestaurants} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus} funcResetFilter={resetFilter} />} />
-              <Route path="randompicker" element={<RandomPicker restaurants={restaurants} filteredRestaurants={filteredRestaurants} funcFilter={filterRestaurant} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus} funcResetFilter={resetFilter} />} />
-              <Route path="*" element={<Home restaurants={restaurants} funcAddRestaurant={addRestaurant} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus} funcResetFilter={resetFilter} />} />
+              <Route index element={<Home restaurants={restaurants} funcAddRestaurant={addRestaurant} funcSetFilteredRestaurants={changeFilteredRestaurants} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus} funcResetFilter={resetFilter} />} />
+              <Route path="favorites" element={<Favorites restaurants={restaurants} funcSetFilteredRestaurants={changeFilteredRestaurants} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus} funcResetFilter={resetFilter} />} />
+              <Route path="randomselection" element={<RandomSelection filteredRestaurants={filteredRestaurants} funcSetFilteredRestaurants={changeFilteredRestaurants} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus} funcResetFilter={resetFilter} />} />
+              <Route path="randompicker" element={<RandomPicker restaurants={restaurants} filteredRestaurants={filteredRestaurants} funcSetFilteredRestaurants={changeFilteredRestaurants} funcFilter={filterRestaurant} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus} funcResetFilter={resetFilter} />} />
+              <Route path="edit" element={<Edit restaurants={filteredRestaurants} funcSetFilteredRestaurants={changeFilteredRestaurants} funcEdit={editRestaurant} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus} funcResetFilter={resetFilter} />} />
+              <Route path="*" element={<Home restaurants={restaurants} funcAddRestaurant={addRestaurant} funcSetFilteredRestaurants={changeFilteredRestaurants} funcDelete={deleteRestaurant} funcFavorite={changeFavoriteStatus} funcResetFilter={resetFilter} />} />
             </Route>
           </Routes>
         </BrowserRouter>

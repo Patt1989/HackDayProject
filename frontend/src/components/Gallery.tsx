@@ -4,11 +4,12 @@ import '../Styles.css'
 
 type Props = {
   restaurants: Restaurant[],
+  funcSetFilteredRestaurants: (id: string) => void,
   funcDelete: (id: string) => void,
   funcFavorite: (id: string) => void
 }
 
-function Gallery({ restaurants, funcDelete, funcFavorite }: Props) {
+function Gallery({ restaurants, funcSetFilteredRestaurants, funcDelete, funcFavorite }: Props) {
 
   return (
     <>
@@ -16,7 +17,7 @@ function Gallery({ restaurants, funcDelete, funcFavorite }: Props) {
         {restaurants.map((restaurant) => {
           return (
             <div>
-              <RestaurantComponent restaurant={restaurant} funcDelete={funcDelete} funcFavorite={funcFavorite} />
+              <RestaurantComponent restaurant={restaurant} funcSetFilteredRestaurants={funcSetFilteredRestaurants} funcDelete={funcDelete} funcFavorite={funcFavorite} />
             </div>
           )
         })}

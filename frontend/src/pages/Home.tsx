@@ -8,19 +8,20 @@ import '../Styles.css/'
 type Props = {
   restaurants: Restaurant[],
   funcAddRestaurant: (event: FormEvent<HTMLFormElement>) => void
+  funcSetFilteredRestaurants: (id: string) => void,
   funcDelete: (id: string) => void,
   funcFavorite: (id: string) => void
   funcResetFilter: () => void
 }
 
-function Home({ restaurants, funcAddRestaurant, funcDelete, funcFavorite, funcResetFilter }: Props) {
+function Home({ restaurants, funcAddRestaurant, funcSetFilteredRestaurants, funcDelete, funcFavorite, funcResetFilter }: Props) {
 
   if (restaurants.length > 4) {
     return (
       <>
         <Navbar funcResetFilter={funcResetFilter}/>
         <SearchArea func={funcAddRestaurant} />
-        <Gallery restaurants={restaurants} funcDelete={funcDelete} funcFavorite={funcFavorite} />
+        <Gallery restaurants={restaurants} funcSetFilteredRestaurants={funcSetFilteredRestaurants} funcDelete={funcDelete} funcFavorite={funcFavorite} />
       </>
     )
   }
@@ -29,7 +30,7 @@ function Home({ restaurants, funcAddRestaurant, funcDelete, funcFavorite, funcRe
       <>
         <Navbar funcResetFilter={funcResetFilter}/>
         <SearchArea func={funcAddRestaurant} />
-        <Gallery restaurants={restaurants} funcDelete={funcDelete} funcFavorite={funcFavorite} />
+        <Gallery restaurants={restaurants} funcSetFilteredRestaurants={funcSetFilteredRestaurants} funcDelete={funcDelete} funcFavorite={funcFavorite} />
         <div className="filler-short"></div>
       </>
     )

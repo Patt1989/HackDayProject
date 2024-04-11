@@ -245,6 +245,30 @@ button[type=submit]:active {
     font-weight: bold;
 }
 
+/* Edit */
+.hidden {
+    visibility: hidden;
+}
+
+.visible {
+    visibility: visible;
+}
+
+.edit-announcement-container {
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 30px;
+
+}
+
+.edit-announcement-container button {
+    background-color: rgb(238, 238, 238);
+    border: 1px solid rgb(107, 36, 12);
+    color: rgb(107, 36, 12);
+    box-shadow: 0 0 0 0;
+}
 
 /* @media for tablet */
 @media (min-width: 768px) {

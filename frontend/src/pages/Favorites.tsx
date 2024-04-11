@@ -5,12 +5,13 @@ import '../Styles.css'
 
 type Props = {
   restaurants: Restaurant[],
+  funcSetFilteredRestaurants: (id: string) => void,
   funcDelete: (id: string) => void,
   funcFavorite: (id: string) => void
   funcResetFilter: () => void
 }
 
-function Favorites({ restaurants, funcDelete, funcFavorite, funcResetFilter }: Props) {
+function Favorites({ restaurants, funcSetFilteredRestaurants, funcDelete, funcFavorite, funcResetFilter }: Props) {
 
   var favoriteRestaurants = restaurants.filter(r => r.favorite);
 
@@ -18,7 +19,7 @@ function Favorites({ restaurants, funcDelete, funcFavorite, funcResetFilter }: P
     return (
       <>
         <Navbar funcResetFilter={funcResetFilter}/>
-        <Gallery restaurants={favoriteRestaurants} funcDelete={funcDelete} funcFavorite={funcFavorite} />
+        <Gallery restaurants={favoriteRestaurants} funcSetFilteredRestaurants={funcSetFilteredRestaurants} funcDelete={funcDelete} funcFavorite={funcFavorite} />
       </>
     )
   }
